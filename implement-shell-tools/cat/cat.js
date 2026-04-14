@@ -26,11 +26,11 @@ if (showNonEmpty) {
   showAllLines = false;
 }
 
-let lineNumber = 1;
 
 // process files in order
 for (const file of files) {
   let content;
+  let lineNumber = 1;
 
   try {
     content = fs.readFileSync(file, 'utf-8');
@@ -55,7 +55,7 @@ for (const file of files) {
       }
     } else if (showAllLines) {
       if (!isLastEmptyLine) {
-        console.log(`${lineNumber++}\t${line}`);
+        console.log(`${String(lineNumber++).padStart(6)}\t${line}`);
       }
     } else {
       if (!isLastEmptyLine) {
