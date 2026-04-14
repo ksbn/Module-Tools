@@ -5,12 +5,15 @@ import path from 'path';
 const args = process.argv.slice(2);
 
 let showAll = false;  //  -a flag
+let onePerLine = false; // -1
 let dir = '.';        // folder
 
 // processing arguments
 args.forEach(arg => {
   if (arg === '-a') {
     showAll = true;
+  } else if (arg === '-1') {
+    onePerLine = true;
   } else if (!arg.startsWith('-')) {
     dir = arg;
   }
@@ -18,12 +21,26 @@ args.forEach(arg => {
 
 try {
   // read files
-  const files = fs.readdirSync(dir, { withFileTypes: true })
-                  .filter(f => showAll || !f.name.startsWith('.')) // filtered hidden
-                  .map(f => f.name);
+  let files = fs.readdirSync(dir, { withFileTypes: true })
+      .map(f => f.name);
 
-  // each file on separate line 
-  files.forEach(f => console.log(f));
+        // add "." and ".." if -a
+  if (showAll) {
+    files = ['.', '..', ...files];
+  }
+
+  // filter hidden if no -a
+  if (!showAll) {
+    files = files.filter(name => !name.startsWith('.'));
+  }
+
+  // output
+  if (onePerLine) {
+    files.forEach(f => console.log(f));
+  } else {
+    console.log(files.join('\t'));
+  }
+  
 } catch (err) {
   console.error(`Error: ${err.message}`);
 }
