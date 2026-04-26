@@ -63,3 +63,5 @@ Answer: Interpreting the bytes 0xAA00FF (RGB 170, 0, 255) results in a vibrant, 
 
 If reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers, what decimal numbers would they be?
 Answer: Reading the bytes 0xAA00FF as a sequence of three one-byte decimal numbers results in 170, 0, and 255.
+
+
